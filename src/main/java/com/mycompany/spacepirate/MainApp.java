@@ -3,8 +3,12 @@ package com.mycompany.spacepirate;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 
@@ -12,14 +16,17 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Scene.fxml"));
+        stage.setTitle("Space Pirate");
+        Group root = new Group();
+        Canvas canvas = new Canvas(640, 860);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
         
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add("/styles/Styles.css");
+        startGame(gc);
         
-        stage.setTitle("JavaFX and Maven");
-        stage.setScene(scene);
+        root.getChildren().add(canvas);
+        stage.setScene(new Scene(root));
         stage.show();
+        stage.setResizable(false);
     }
 
     /**
@@ -33,5 +40,16 @@ public class MainApp extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
+    private void startGame(GraphicsContext gc) {
+        drawSpace(gc);
+    }
+    
+    private void drawSpace(GraphicsContext gc) {
+        gc.setFill(Color.GREY);
+        gc.fillRect(0, 0, 640, 860); // draw Space 
+    }
+
+    
 
 }
