@@ -15,6 +15,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import static javafx.application.Application.launch;
 
 
 public class MainApp extends Application {
@@ -25,8 +26,9 @@ public class MainApp extends Application {
         Group root = new Group();
         Canvas canvas = new Canvas(640, 860);
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        SpaceObjectWithColision meteor = createMeteor(gc, 400, 100, 30, 10);
-        startGame(gc, meteor);
+        
+        Space universe = new Space();
+        startGame(gc, universe);
         
         root.getChildren().add(canvas);
         stage.setScene(new Scene(root));
@@ -46,27 +48,18 @@ public class MainApp extends Application {
         launch(args);
     }
 
-    private void startGame(final GraphicsContext gc,final SpaceObjectWithColision meteor) {
-        drawSpace(gc);
-        meteor.draw(gc);
-        meteor.moveObject();
-         final Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+    private void startGame(final GraphicsContext graphicalContext, final Space universe) {
+        universe.drawSpaceAndAllMeteoritsInSpace(graphicalContext);
+        universe.moveAllMeteorits();
+        universe.generateMeteorit();
+        
+         final Timeline timeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                startGame(gc, meteor);
+                startGame(graphicalContext, universe);
             }
          }));
+         timeline.play();
     }
-    
-    private void drawSpace(GraphicsContext gc) {
-        gc.setFill(Color.GREY);
-        gc.fillRect(0, 0, 640, 860); // draw Space 
-    }
-
-    private SpaceObjectWithColision createMeteor (GraphicsContext gc, int possX, int possY, int radius, int velocity){
-        SpaceObjectWithColision newMeteor = new SpaceObjectWithColision(possX, possY, radius, velocity);
-        return newMeteor;
-    }
-    
 
 }

@@ -29,6 +29,9 @@ public abstract class SpaceObject {
     }
     
     public abstract void draw (GraphicsContext gc) ;
-        
+
+    public int getPossitionY() {
+        return possitionY;
+    }
     
 }
