@@ -5,15 +5,17 @@
  */
 package com.mycompany.spacepirate;
 
+import javafx.scene.canvas.GraphicsContext;
+
 /**
  *
  * @author Jakub
  */
-public class SpaceObject {
-    private int possitionX;
-    private int possitionY;
-    private int radius;
-    private int velocity;
+public abstract class SpaceObject {
+    protected int possitionX;
+    protected int possitionY;
+    protected int radius;
+    protected int velocity;
         
     public SpaceObject (int possitionX, int possitionY, int radius,int velocity) {
         this.possitionX = possitionX;
@@ -26,7 +28,7 @@ public class SpaceObject {
         possitionY = possitionY + velocity; 
     }
     
-    public void draw () {
+    public abstract void draw (GraphicsContext gc) ;
         
-    }
+    
 }
