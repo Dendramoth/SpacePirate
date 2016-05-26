@@ -6,6 +6,7 @@
 package com.mycompany.spacepirate;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import javafx.collections.ObservableList;
@@ -18,37 +19,42 @@ import javafx.scene.paint.Color;
  * @author Dendra
  */
 public class Space {
+
     int timeToGenerateMeteorit = 50;
     List<SpaceObjectWithColision> listOfAllMeteorits = new ArrayList<SpaceObjectWithColision>();
     Random random = new Random();
-    
-    public Space(){
-        
+
+    public Space() {
+
     }
-    
-    public void drawSpaceAndAllMeteoritsInSpace(GraphicsContext gc){
+
+    public void drawSpaceAndAllMeteoritsInSpace(GraphicsContext gc) {
         gc.setFill(Color.GREY);
         gc.fillRect(0, 0, 640, 860); // draw Space 
-        
-        for (SpaceObjectWithColision spaceObjectWithColision : listOfAllMeteorits){
+
+        for (SpaceObjectWithColision spaceObjectWithColision : listOfAllMeteorits) {
             spaceObjectWithColision.draw(gc);
         }
     }
-    
-    public void moveAllMeteorits(){
-        for (SpaceObjectWithColision spaceObjectWithColision : listOfAllMeteorits){
+
+    public void moveAllMeteorits() {
+        System.out.println(listOfAllMeteorits.size());
+        Iterator<SpaceObjectWithColision> iterator = listOfAllMeteorits.iterator();
+        while (iterator.hasNext()) {
+            SpaceObjectWithColision spaceObjectWithColision = iterator.next();
             spaceObjectWithColision.moveObject();
-            if (spaceObjectWithColision.getPossitionY() > 1000){
-         //       listOfAllMeteorits.remove(spaceObjectWithColision);
+            if (spaceObjectWithColision.getPossitionY() > 1000) {
+                iterator.remove();
             }
         }
+
     }
-    
-    public void generateMeteorit(){
+
+    public void generateMeteorit() {
         timeToGenerateMeteorit--;
-        if (timeToGenerateMeteorit < 1){
+        if (timeToGenerateMeteorit < 1) {
             timeToGenerateMeteorit = 50;
-            listOfAllMeteorits.add(new SpaceObjectWithColision(random.nextInt(600)+100, -50, random.nextInt(90)+10, random.nextInt(5)+1));
+            listOfAllMeteorits.add(new SpaceObjectWithColision(random.nextInt(600) + 100, -50, random.nextInt(90) + 10, random.nextInt(5) + 1));
         }
     }
 }
