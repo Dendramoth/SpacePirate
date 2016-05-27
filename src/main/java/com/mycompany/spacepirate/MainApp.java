@@ -16,20 +16,35 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import static javafx.application.Application.launch;
-
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 public class MainApp extends Application {
+
+    Space universe = new Space();
 
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Space Pirate");
         Group root = new Group();
         Canvas canvas = new Canvas(640, 860);
+
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        
-        Space universe = new Space();
+
+        stage.addEventHandler(KeyEvent.KEY_PRESSED,
+                new EventHandler<KeyEvent>() {
+            public void handle(
+                    final KeyEvent keyEvent) {
+                if (keyEvent.getCode() == KeyCode.LEFT) {
+                    universe.getSpaceShip().moveToTheLeft();
+                }
+                if (keyEvent.getCode() == KeyCode.RIGHT) {
+                    universe.getSpaceShip().moveToTheRight();
+                }    
+            }
+        });
         startGame(gc, universe);
-        
+
         root.getChildren().add(canvas);
         stage.setScene(new Scene(root));
         stage.show();
@@ -52,14 +67,14 @@ public class MainApp extends Application {
         universe.drawSpaceAndAllMeteoritsInSpace(graphicalContext);
         universe.moveAllMeteorits();
         universe.generateMeteorit();
-        
-         final Timeline timeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
+
+        final Timeline timeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
                 startGame(graphicalContext, universe);
             }
-         }));
-         timeline.play();
+        }));
+        timeline.play();
     }
 
 }

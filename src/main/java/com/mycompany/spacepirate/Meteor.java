@@ -12,17 +12,18 @@ import javafx.scene.paint.Color;
  *
  * @author Jakub
  */
-public abstract class SpaceObjectWithColision extends SpaceObject{
+public class Meteor extends SpaceObjectWithColision {
     
-    public SpaceObjectWithColision (int possitionX, int possitionY, int radius,int velocity){
+    public Meteor(int possitionX, int possitionY, int radius, int velocity) {
         super(possitionX, possitionY, radius, velocity);
     }
     
-    public boolean ColidedOrNotToColidedThatsTheQuestion (int possitionXRightOfSpaceship, int possitionYUpOfSpaceship, int possitionXLeftOfSpaceship, int possitionYDownOfSpaceship){
-        return false;
+    @Override
+    public void draw(GraphicsContext gc) {
+        gc.setFill(Color.CHOCOLATE);
+        gc.fillOval(possitionX - radius, possitionY - radius, radius * 2, radius * 2);
+        
     }
-
     
     
- 
 }

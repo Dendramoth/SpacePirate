@@ -20,9 +20,10 @@ import javafx.scene.paint.Color;
  */
 public class Space {
 
-    int timeToGenerateMeteorit = 50;
-    List<SpaceObjectWithColision> listOfAllMeteorits = new ArrayList<SpaceObjectWithColision>();
+    private int timeToGenerateMeteorit = 50;
+    private List<Meteor> listOfAllMeteorits = new ArrayList<Meteor>();
     Random random = new Random();
+    private SpaceShip spaceShip = new SpaceShip(310, 800, 20, 5);
 
     public Space() {
 
@@ -32,18 +33,19 @@ public class Space {
         gc.setFill(Color.GREY);
         gc.fillRect(0, 0, 640, 860); // draw Space 
 
-        for (SpaceObjectWithColision spaceObjectWithColision : listOfAllMeteorits) {
-            spaceObjectWithColision.draw(gc);
+        for (Meteor meteor : listOfAllMeteorits) {
+            meteor.draw(gc);
         }
+        
+        spaceShip.draw(gc);
     }
 
     public void moveAllMeteorits() {
-        System.out.println(listOfAllMeteorits.size());
-        Iterator<SpaceObjectWithColision> iterator = listOfAllMeteorits.iterator();
+        Iterator<Meteor> iterator = listOfAllMeteorits.iterator();
         while (iterator.hasNext()) {
-            SpaceObjectWithColision spaceObjectWithColision = iterator.next();
-            spaceObjectWithColision.moveObject();
-            if (spaceObjectWithColision.getPossitionY() > 1000) {
+            Meteor meteor = iterator.next();
+            meteor.moveObject();
+            if (meteor.getPossitionY() > 1000) {
                 iterator.remove();
             }
         }
@@ -54,7 +56,14 @@ public class Space {
         timeToGenerateMeteorit--;
         if (timeToGenerateMeteorit < 1) {
             timeToGenerateMeteorit = 50;
-            listOfAllMeteorits.add(new SpaceObjectWithColision(random.nextInt(600) + 100, -50, random.nextInt(90) + 10, random.nextInt(5) + 1));
+            listOfAllMeteorits.add(new Meteor(random.nextInt(640), -50, random.nextInt(90) + 10, random.nextInt(5) + 1));
         }
     }
+
+    public SpaceShip getSpaceShip() {
+        return spaceShip;
+    }
+    
+   
+    
 }
