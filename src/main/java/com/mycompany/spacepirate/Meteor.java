@@ -5,7 +5,9 @@
  */
 package com.mycompany.spacepirate;
 
+import java.io.File;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 /**
@@ -13,15 +15,20 @@ import javafx.scene.paint.Color;
  * @author Jakub
  */
 public class Meteor extends SpaceObjectWithColision {
+    Image meteorImage1;
     
-    public Meteor(int possitionX, int possitionY, int radius, int velocity) {
+    public Meteor(int possitionX, int possitionY, int radius, int velocity, Image meteor1) {
         super(possitionX, possitionY, radius, velocity);
+        this.meteorImage1 = meteor1;
     }
     
     @Override
     public void draw(GraphicsContext gc) {
-        gc.setFill(Color.CHOCOLATE);
-        gc.fillOval(possitionX - radius, possitionY - radius, radius * 2, radius * 2);
+   //     gc.setFill(Color.CHOCOLATE);
+   //     gc.fillOval(possitionX - radius, possitionY - radius, radius * 2, radius * 2);
+        
+        gc.drawImage(meteorImage1, possitionX, possitionY, radius, radius);
+       
         
     }
     

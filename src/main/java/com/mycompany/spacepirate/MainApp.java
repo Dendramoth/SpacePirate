@@ -16,17 +16,24 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import static javafx.application.Application.launch;
+import javafx.geometry.Point2D;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 
 public class MainApp extends Application {
 
+    
     Space universe = new Space();
+    LoadAllImages loadAllImages = new LoadAllImages();
 
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Space Pirate");
-        Group root = new Group();
+        
+        Pane root = new Pane();
         Canvas canvas = new Canvas(640, 860);
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -40,15 +47,20 @@ public class MainApp extends Application {
                 }
                 if (keyEvent.getCode() == KeyCode.RIGHT) {
                     universe.getSpaceShip().moveToTheRight();
-                }    
+                }
             }
         });
-        startGame(gc, universe);
+        
+        
+  //      graphicalContext.drawImage(image,100,100);
+        
+        startGame(gc, universe, stage);
 
         root.getChildren().add(canvas);
         stage.setScene(new Scene(root));
         stage.show();
-        stage.setResizable(false);
+    //    stage.setResizable(true);
+        
     }
 
     /**
@@ -63,7 +75,8 @@ public class MainApp extends Application {
         launch(args);
     }
 
-    private void startGame(final GraphicsContext graphicalContext, final Space universe) {
+    private void startGame(final GraphicsContext graphicalContext, final Space universe, final Stage stage) {
+        SpaceShip.setUpGlobalWindowCoords(stage.getX(), stage.getY());
         universe.drawSpaceAndAllMeteoritsInSpace(graphicalContext);
         universe.moveAllMeteorits();
         universe.generateMeteorit();
@@ -71,7 +84,7 @@ public class MainApp extends Application {
         final Timeline timeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                startGame(graphicalContext, universe);
+                startGame(graphicalContext, universe, stage);
             }
         }));
         timeline.play();
