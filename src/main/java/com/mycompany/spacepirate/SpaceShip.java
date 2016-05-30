@@ -17,20 +17,36 @@ import javafx.stage.Window;
  * @author Jakub
  */
 public class SpaceShip extends SpaceObjectWithColision {
+
     private static int windowPositionX;
     private static int windowPositionY;
 
+    private Image shipImage;
+    private double angle;
+
     public SpaceShip(int possitionX, int possitionY, int radius, int velocity) {
         super(possitionX, possitionY, radius, velocity);
+        shipImage = LoadAllImages.mapOfAllImages.get("ship");
     }
 
     @Override
     public void draw(GraphicsContext gc) {
-      //  gc.setFill(Color.AQUA);
-     //   gc.fillRect(possitionX, possitionY, radius, radius);
-        String OCPI = "/ship.png";
-        Image image = new Image(OCPI);
-        gc.drawImage(image, possitionX, possitionY);
+        gc.save();
+        gc.translate(possitionX, possitionY);
+        gc.rotate(angle);
+        gc.drawImage(shipImage, 0, 0);
+        gc.restore();
+    }
+
+    private double calculateAngleForDrawingRotatedShip(double x, double y) {
+        if (y == 0 || x == 0) {
+            angle = 0;
+        } else {
+            double angle = Math.atan((y / x));
+            System.out.println(angle);
+
+        }
+        return angle;
     }
 
     public void moveToTheLeft() {
@@ -45,41 +61,37 @@ public class SpaceShip extends SpaceObjectWithColision {
         Point mouseLocation = MouseInfo.getPointerInfo().getLocation();
         mouseLocation.getX();
         mouseLocation.getY();
-        
-        int xMovement =  (int)Math.round(mouseLocation.getX()) - windowPositionX - possitionX - radius;
-        int yMovement =  (int)Math.round(mouseLocation.getY()) - windowPositionY - possitionY - radius;
-        
-        xMovement= xMovement / 15;
-        yMovement= yMovement / 15;
-        
-        possitionX = possitionX + xMovement;
-        possitionY = possitionY + yMovement;
-        
+
+        int xMovement = (int) Math.round(mouseLocation.getX()) - windowPositionX - possitionX - radius;
+        int yMovement = (int) Math.round(mouseLocation.getY()) - windowPositionY - possitionY - radius;
+
+        xMovement = xMovement / 15;
+        yMovement = yMovement / 15;
+
+        //       possitionX = possitionX + xMovement;
+        //       possitionY = possitionY + yMovement;
+        calculateAngleForDrawingRotatedShip(xMovement, yMovement);
         controlWindowBounds();
-        
-        System.out.println(xMovement);
-        System.out.println(yMovement);
-        
     }
-    
-    private void controlWindowBounds(){
-        if (possitionX < 0){
+
+    private void controlWindowBounds() {
+        if (possitionX < 0) {
             possitionX = 0;
         }
-        if (possitionX > 580){
+        if (possitionX > 580) {
             possitionX = 580;
         }
-        if (possitionY < 0){
+        if (possitionY < 0) {
             possitionY = 0;
         }
-        if (possitionY > 800){
+        if (possitionY > 800) {
             possitionY = 800;
         }
     }
-    
-    public static void setUpGlobalWindowCoords(Double globalX, Double globalY){
-        windowPositionX = (int)Math.round(globalX);
-        windowPositionY = (int)Math.round(globalY);
+
+    public static void setUpGlobalWindowCoords(Double globalX, Double globalY) {
+        windowPositionX = (int) Math.round(globalX);
+        windowPositionY = (int) Math.round(globalY);
     }
 
 }

@@ -29,16 +29,17 @@ public class Space {
     public Space() {
     }
 
-    public void drawSpaceAndAllMeteoritsInSpace(GraphicsContext gc) {
-        gc.setFill(Color.BLACK);
-        gc.fillRect(0, 0, 640, 860); // draw Space 
+    public void drawSpaceAndAllMeteoritsInSpace(GraphicsContext graphicsContextSpace, GraphicsContext graphicsContextShip) {
+        graphicsContextSpace.setFill(Color.BLACK);
+        graphicsContextSpace.fillRect(0, 0, MainApp.WINDOWWIDTH, MainApp.WINDOWHEIGH); // draw Space 
 
         for (Meteor meteor : listOfAllMeteorits) {
-            meteor.draw(gc);
+            meteor.draw(graphicsContextSpace);
         }
 
+        graphicsContextShip.clearRect(0, 0, MainApp.WINDOWWIDTH, MainApp.WINDOWHEIGH);
         spaceShip.moveToMouseCursor();
-        spaceShip.draw(gc);
+        spaceShip.draw(graphicsContextShip);
     }
 
     public void moveAllMeteorits() {

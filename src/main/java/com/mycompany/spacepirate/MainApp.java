@@ -22,22 +22,29 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 
 public class MainApp extends Application {
+    public static int WINDOWWIDTH = 640;
+    public static int WINDOWHEIGH = 860;
 
-    
-    Space universe = new Space();
+    Space universe;
     LoadAllImages loadAllImages = new LoadAllImages();
 
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Space Pirate");
-        
-        Pane root = new Pane();
-        Canvas canvas = new Canvas(640, 860);
 
-        GraphicsContext gc = canvas.getGraphicsContext2D();
+        StackPane root = new StackPane();
+        Canvas spaceCanvas = new Canvas(WINDOWWIDTH, WINDOWHEIGH);
+        GraphicsContext gcSpace = spaceCanvas.getGraphicsContext2D();
 
+        Canvas shipCanvas = new Canvas(WINDOWWIDTH, WINDOWHEIGH);
+        GraphicsContext gcShip = shipCanvas.getGraphicsContext2D();
+  //      gcShip.setFill(Color.GREEN);
+  //      gcShip.fillOval(50, 50, 20, 20);
+        universe = new Space();
+  
         stage.addEventHandler(KeyEvent.KEY_PRESSED,
                 new EventHandler<KeyEvent>() {
             public void handle(
@@ -50,17 +57,14 @@ public class MainApp extends Application {
                 }
             }
         });
-        
-        
-  //      graphicalContext.drawImage(image,100,100);
-        
-        startGame(gc, universe, stage);
 
-        root.getChildren().add(canvas);
+        gameInfiniteLoop(gcSpace, gcShip, universe, stage);
+
+        root.getChildren().add(spaceCanvas);
+        root.getChildren().add(shipCanvas);
+        shipCanvas.toFront();
         stage.setScene(new Scene(root));
         stage.show();
-    //    stage.setResizable(true);
-        
     }
 
     /**
@@ -75,16 +79,16 @@ public class MainApp extends Application {
         launch(args);
     }
 
-    private void startGame(final GraphicsContext graphicalContext, final Space universe, final Stage stage) {
+    private void gameInfiniteLoop(final GraphicsContext graphicalContextSpace, final GraphicsContext graphicalContextShip, final Space universe, final Stage stage) {
         SpaceShip.setUpGlobalWindowCoords(stage.getX(), stage.getY());
-        universe.drawSpaceAndAllMeteoritsInSpace(graphicalContext);
+        universe.drawSpaceAndAllMeteoritsInSpace(graphicalContextSpace, graphicalContextShip);
         universe.moveAllMeteorits();
         universe.generateMeteorit();
 
         final Timeline timeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                startGame(graphicalContext, universe, stage);
+                gameInfiniteLoop(graphicalContextSpace, graphicalContextShip, universe, stage);
             }
         }));
         timeline.play();

@@ -23,6 +23,9 @@ import javafx.scene.image.Image;
         
         image = new Image("/meteor2.png");
         mapOfAllImages.put("meteorTwo", image);
+        
+        image = new Image("/ship.png");
+        mapOfAllImages.put("ship", image);
     }
 
     public HashMap<String, Image> getMapOfAllImages() {

@@ -15,7 +15,7 @@ import javafx.scene.paint.Color;
  * @author Jakub
  */
 public class Meteor extends SpaceObjectWithColision {
-    Image meteorImage1;
+    private Image meteorImage1;
     
     public Meteor(int possitionX, int possitionY, int radius, int velocity, Image meteor1) {
         super(possitionX, possitionY, radius, velocity);
