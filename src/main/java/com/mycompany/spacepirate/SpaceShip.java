@@ -32,22 +32,24 @@ public class SpaceShip extends SpaceObjectWithColision {
     @Override
     public void draw(GraphicsContext gc) {
         gc.save();
-        gc.translate(possitionX, possitionY);
+        gc.translate(possitionX, possitionY );
         gc.rotate(angle);
-        gc.drawImage(shipImage, 0, 0);
+        gc.drawImage(shipImage, - shipImage.getWidth()/2 , - shipImage.getHeight()/2);
         gc.restore();
     }
 
     private double calculateAngleForDrawingRotatedShip(double x, double y) {
-        if (y == 0 || x == 0) {
+        if (y == 0 && x == 0) {
             angle = 0;
         } else {
             if (y > 0) {
-                angle = Math.toDegrees(Math.acos(x / (Math.sqrt(y * y + x * x)))) - 90;
+                angle = Math.toDegrees(Math.acos(x / (Math.sqrt(y * y + x * x)))) + 90;
+                    System.out.println(angle);
             } else {
                 angle = -Math.toDegrees(Math.acos(x / (Math.sqrt(y * y + x * x)))) + 90;
+            
             }
-            System.out.println(angle);
+            
 
         }
         return angle;
