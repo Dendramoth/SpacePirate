@@ -42,7 +42,11 @@ public class SpaceShip extends SpaceObjectWithColision {
         if (y == 0 || x == 0) {
             angle = 0;
         } else {
-            double angle = Math.atan((y / x));
+            if (y > 0) {
+                angle = Math.toDegrees(Math.acos(x / (Math.sqrt(y * y + x * x)))) - 90;
+            } else {
+                angle = -Math.toDegrees(Math.acos(x / (Math.sqrt(y * y + x * x)))) + 90;
+            }
             System.out.println(angle);
 
         }
