@@ -25,6 +25,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
 public class MainApp extends Application {
+
     public static int WINDOWWIDTH = 640;
     public static int WINDOWHEIGH = 860;
 
@@ -41,10 +42,10 @@ public class MainApp extends Application {
 
         Canvas shipCanvas = new Canvas(WINDOWWIDTH, WINDOWHEIGH);
         GraphicsContext gcShip = shipCanvas.getGraphicsContext2D();
-  //      gcShip.setFill(Color.GREEN);
-  //      gcShip.fillOval(50, 50, 20, 20);
+        //      gcShip.setFill(Color.GREEN);
+        //      gcShip.fillOval(50, 50, 20, 20);
         universe = new Space();
-  
+
         stage.addEventHandler(KeyEvent.KEY_PRESSED,
                 new EventHandler<KeyEvent>() {
             public void handle(
@@ -81,17 +82,23 @@ public class MainApp extends Application {
 
     private void gameInfiniteLoop(final GraphicsContext graphicalContextSpace, final GraphicsContext graphicalContextShip, final Space universe, final Stage stage) {
         SpaceShip.setUpGlobalWindowCoords(stage.getX(), stage.getY());
-        universe.drawSpaceAndAllMeteoritsInSpace(graphicalContextSpace, graphicalContextShip);
+        universe.drawSpaceAndAllMeteoritsInSpace(graphicalContextSpace);
         universe.moveAllMeteorits();
         universe.generateMeteorit();
+        universe.moveSpaceShipInSpace();
+        universe.drawSpaceShipInSpace(graphicalContextShip);
 
-        final Timeline timeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                gameInfiniteLoop(graphicalContextSpace, graphicalContextShip, universe, stage);
-            }
-        }));
-        timeline.play();
+        if (!universe.controlCollisions()) {
+
+            final Timeline timeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    gameInfiniteLoop(graphicalContextSpace, graphicalContextShip, universe, stage);
+                }
+            }));
+            timeline.play();
+            
+        }
     }
 
 }

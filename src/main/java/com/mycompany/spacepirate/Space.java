@@ -29,17 +29,23 @@ public class Space {
     public Space() {
     }
 
-    public void drawSpaceAndAllMeteoritsInSpace(GraphicsContext graphicsContextSpace, GraphicsContext graphicsContextShip) {
+    public void drawSpaceAndAllMeteoritsInSpace(GraphicsContext graphicsContextSpace) {
         graphicsContextSpace.setFill(Color.BLACK);
         graphicsContextSpace.fillRect(0, 0, MainApp.WINDOWWIDTH, MainApp.WINDOWHEIGH); // draw Space 
 
         for (Meteor meteor : listOfAllMeteorits) {
             meteor.draw(graphicsContextSpace);
         }
+    }
 
-        graphicsContextShip.clearRect(0, 0, MainApp.WINDOWWIDTH, MainApp.WINDOWHEIGH);
+    public void moveSpaceShipInSpace() {
         spaceShip.moveToMouseCursor();
+    }
+
+    public void drawSpaceShipInSpace(GraphicsContext graphicsContextShip) {
+        graphicsContextShip.clearRect(0, 0, MainApp.WINDOWWIDTH, MainApp.WINDOWHEIGH);
         spaceShip.draw(graphicsContextShip);
+        spaceShip.drawPolygon(graphicsContextShip);
     }
 
     public void moveAllMeteorits() {
@@ -70,8 +76,17 @@ public class Space {
                 default:
                     meteorImage = LoadAllImages.mapOfAllImages.get("meteorOne");
             }
-            listOfAllMeteorits.add(new Meteor(random.nextInt(700)-75, -75, random.nextInt(90) + 10, random.nextInt(3) + 1, meteorImage));
+            listOfAllMeteorits.add(new Meteor(random.nextInt(700) - 75, -75, random.nextInt(90) + 10, random.nextInt(3) + 1, meteorImage));
         }
+    }
+
+    public boolean controlCollisions() {
+        for (Meteor meteor : listOfAllMeteorits) {
+            if (meteor.colisionDetection(spaceShip.getPolygon())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public SpaceShip getSpaceShip() {

@@ -7,22 +7,27 @@ package com.mycompany.spacepirate;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Shape;
 
 /**
  *
  * @author Jakub
  */
-public abstract class SpaceObjectWithColision extends SpaceObject{
-    
-    public SpaceObjectWithColision (int possitionX, int possitionY, int radius,int velocity){
+public abstract class SpaceObjectWithColision extends SpaceObject {
+
+    public SpaceObjectWithColision(int possitionX, int possitionY, int radius, int velocity) {
         super(possitionX, possitionY, radius, velocity);
     }
-    
-    public boolean ColidedOrNotToColidedThatsTheQuestion (int possitionXRightOfSpaceship, int possitionYUpOfSpaceship, int possitionXLeftOfSpaceship, int possitionYDownOfSpaceship){
-        return false;
+
+    public boolean colisionDetection(Polygon spaceShipPolygon) { // collision detection should be based on the polygons created just for detection purposes
+        Circle meteorPolygon = new Circle(possitionX, possitionY, radius);
+        Shape intersect = Shape.intersect(spaceShipPolygon, meteorPolygon);
+        if (intersect.getLayoutBounds().getHeight() <= 0 || intersect.getLayoutBounds().getWidth() <= 0) {
+            return false;
+        }
+        return true;
     }
 
-    
-    
- 
 }

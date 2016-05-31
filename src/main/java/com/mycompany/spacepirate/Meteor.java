@@ -24,8 +24,8 @@ public class Meteor extends SpaceObjectWithColision {
     
     @Override
     public void draw(GraphicsContext gc) {
-   //     gc.setFill(Color.CHOCOLATE);
-   //     gc.fillOval(possitionX - radius, possitionY - radius, radius * 2, radius * 2);
+        gc.setFill(Color.CHOCOLATE);
+        gc.fillOval(possitionX - radius, possitionY - radius, radius * 2, radius * 2);
         
         gc.drawImage(meteorImage1, possitionX, possitionY, radius, radius);
        
