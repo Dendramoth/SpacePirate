@@ -45,7 +45,7 @@ public class Space {
     public void drawSpaceShipInSpace(GraphicsContext graphicsContextShip) {
         graphicsContextShip.clearRect(0, 0, MainApp.WINDOWWIDTH, MainApp.WINDOWHEIGH);
         spaceShip.draw(graphicsContextShip);
-        spaceShip.drawPolygon(graphicsContextShip);
+       //gh spaceShip.drawPolygon(graphicsContextShip);
     }
 
     public void moveAllMeteorits() {

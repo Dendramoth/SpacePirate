@@ -11,6 +11,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import javafx.scene.transform.Rotate;
 import javafx.stage.Window;
 
 /**
@@ -102,33 +103,34 @@ public class SpaceShip extends SpaceObjectWithColision {
     private void preparePolygonForColisionDetection() {
         polygon = new Polygon();
         polygon.getPoints().addAll(new Double[]{
-            3.0 + possitionX, 28.0 + possitionY,
-            5.0 + possitionX, 55.0 + possitionY,
-            7.0 + possitionX, 50.0 + possitionY,
-            20.0 + possitionX, 64.0 + possitionY,
-            42.0 + possitionX, 64.0 + possitionY,
-            55.0 + possitionX, 50.0 + possitionY,
-            59.0 + possitionX, 55.0 + possitionY,
-            61.0 + possitionX, 28.0 + possitionY,
-            57.0 + possitionX, 28.0 + possitionY,
-            57.0 + possitionX, 40.0 + possitionY,
-            40.0 + possitionX, 44.0 + possitionY,
-            40.0 + possitionX, 10.0 + possitionY,
-            36.0 + possitionX, 0.0 + possitionY,
-            28.0 + possitionX, 0.0 + possitionY,
-            24.0 + possitionX, 10.0 + possitionY,
-            24.0 + possitionX, 44.0 + possitionY,
-            7.0 + possitionX, 40.0 + possitionY,
-            5.0 + possitionX, 28.0 + possitionY,
-            3.0 + possitionX, 28.0 + possitionY});
+            3.0 + possitionX - 32, 28.0 + possitionY - 32,
+            5.0 + possitionX - 32, 55.0 + possitionY - 32,
+            7.0 + possitionX - 32, 50.0 + possitionY - 32,
+            20.0 + possitionX - 32, 64.0 + possitionY - 32,
+            42.0 + possitionX - 32, 64.0 + possitionY - 32,
+            55.0 + possitionX - 32, 50.0 + possitionY - 32,
+            59.0 + possitionX - 32, 55.0 + possitionY - 32,
+            61.0 + possitionX - 32, 28.0 + possitionY - 32,
+            57.0 + possitionX - 32, 28.0 + possitionY - 32,
+            57.0 + possitionX - 32, 40.0 + possitionY - 32,
+            40.0 + possitionX - 32, 44.0 + possitionY - 32,
+            40.0 + possitionX - 32, 10.0 + possitionY - 32,
+            36.0 + possitionX - 32, 0.0 + possitionY - 32,
+            28.0 + possitionX - 32, 0.0 + possitionY - 32,
+            24.0 + possitionX - 32, 10.0 + possitionY - 32,
+            24.0 + possitionX - 32, 44.0 + possitionY - 32,
+            7.0 + possitionX - 32, 40.0 + possitionY - 32,
+            5.0 + possitionX - 32, 28.0 + possitionY - 32,
+            3.0 + possitionX - 32, 28.0 + possitionY - 32});
+        
+            polygon.setRotate(angle);
     }
-    
+
     public void drawPolygon(GraphicsContext palete) {
         double[] xPoints = {
-            3 + possitionX, 5 + possitionX, 7 + possitionX, 20 + possitionX, 42 + possitionX, 55 + possitionX, 59 + possitionX, 61 + possitionX, 57 + possitionX, 57 + possitionX , 40 + possitionX , 40 + possitionX , 36 + possitionX , 28 + possitionX , 24 + possitionX , 24 + possitionX , 7 + possitionX , 5 + possitionX , 3 + possitionX,
-        };
+            3 + possitionX - 32, 5 + possitionX - 32, 7 + possitionX - 32, 20 + possitionX - 32, 42 + possitionX - 32, 55 + possitionX - 32, 59 + possitionX - 32, 61 + possitionX - 32, 57 + possitionX - 32, 57 + possitionX - 32, 40 + possitionX - 32, 40 + possitionX - 32, 36 + possitionX - 32, 28 + possitionX - 32, 24 + possitionX - 32, 24 + possitionX - 32, 7 + possitionX - 32, 5 + possitionX - 32, 3 + possitionX - 32,};
         double[] yPoints = {
-            28 + possitionY, 55 + possitionY, 50 + possitionY, 64 + possitionY, 64 + possitionY, 50 + possitionY, 55 + possitionY, 28 + possitionY, 28 + possitionY, 40 + possitionY, 44 + possitionY , 10 + possitionY , 0 + possitionY , 0 + possitionY , 10 + possitionY , 44 + possitionY , 40 + possitionY , 28 + possitionY, 28 + possitionY 
+            28 + possitionY - 32, 55 + possitionY - 32, 50 + possitionY - 32, 64 + possitionY - 32, 64 + possitionY - 32, 50 + possitionY - 32, 55 + possitionY - 32, 28 + possitionY - 32, 28 + possitionY - 32, 40 + possitionY - 32, 44 + possitionY - 32, 10 + possitionY - 32, 0 + possitionY - 32, 0 + possitionY - 32, 10 + possitionY - 32, 44 + possitionY - 32, 40 + possitionY - 32, 28 + possitionY - 32, 28 + possitionY - 32
         };
         palete.setFill(Color.CRIMSON);
         palete.fillPolygon(xPoints, yPoints, 19);
@@ -137,7 +139,5 @@ public class SpaceShip extends SpaceObjectWithColision {
     public Polygon getPolygon() {
         return polygon;
     }
-    
-    
 
 }
