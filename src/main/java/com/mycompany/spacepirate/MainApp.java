@@ -59,13 +59,13 @@ public class MainApp extends Application {
             }
         });
 
-        gameInfiniteLoop(gcSpace, gcShip, universe, stage);
-
         root.getChildren().add(spaceCanvas);
         root.getChildren().add(shipCanvas);
         shipCanvas.toFront();
         stage.setScene(new Scene(root));
         stage.show();
+        
+        gameInfiniteLoop(gcSpace, gcShip, universe, stage);
     }
 
     /**

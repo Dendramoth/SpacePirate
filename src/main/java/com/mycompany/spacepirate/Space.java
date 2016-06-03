@@ -24,7 +24,7 @@ public class Space {
     private int timeToGenerateMeteorit = 50;
     private List<Meteor> listOfAllMeteorits = new ArrayList<Meteor>();
     Random random = new Random();
-    private SpaceShip spaceShip = new SpaceShip(310, 800, 20, 5);
+    private SpaceShip spaceShip = new SpaceShip(310.0, 800.0, 20, 5);
 
     public Space() {
     }

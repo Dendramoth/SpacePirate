@@ -12,12 +12,12 @@ import javafx.scene.canvas.GraphicsContext;
  * @author Jakub
  */
 public abstract class SpaceObject {
-    protected int possitionX;
-    protected int possitionY;
+    protected double possitionX;
+    protected double possitionY;
     protected int radius;
     protected int velocity;
         
-    public SpaceObject (int possitionX, int possitionY, int radius,int velocity) {
+    public SpaceObject (double possitionX, double possitionY, int radius,int velocity) {
         this.possitionX = possitionX;
         this.possitionY = possitionY;
         this.radius = radius;
@@ -30,7 +30,7 @@ public abstract class SpaceObject {
     
     public abstract void draw (GraphicsContext gc) ;
 
-    public int getPossitionY() {
+    public double getPossitionY() {
         return possitionY;
     }
     

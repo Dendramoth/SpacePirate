@@ -20,14 +20,14 @@ import javafx.stage.Window;
  */
 public class SpaceShip extends SpaceObjectWithColision {
 
-    private static int windowPositionX;
-    private static int windowPositionY;
+    private static double windowPositionX;
+    private static double windowPositionY;
 
     private Image shipImage;
     private double angle;
     private Polygon polygon;
 
-    public SpaceShip(int possitionX, int possitionY, int radius, int velocity) {
+    public SpaceShip(double possitionX, double possitionY, int radius, int velocity) {
         super(possitionX, possitionY, radius, velocity);
         shipImage = LoadAllImages.mapOfAllImages.get("ship");
     }
@@ -53,11 +53,12 @@ public class SpaceShip extends SpaceObjectWithColision {
     }
 
     public void moveToTheLeft() {
-        possitionX = possitionX - velocity;
+        System.out.println(this);
+//        possitionX = possitionX - velocity;
     }
 
     public void moveToTheRight() {
-        possitionX = possitionX + velocity;
+  //      possitionX = possitionX + velocity;
     }
 
     public void moveToMouseCursor() {
@@ -65,9 +66,10 @@ public class SpaceShip extends SpaceObjectWithColision {
         mouseLocation.getX();
         mouseLocation.getY();
 
-        int xMovement = (int) Math.round(mouseLocation.getX()) - windowPositionX - possitionX - radius;
-        int yMovement = (int) Math.round(mouseLocation.getY()) - windowPositionY - possitionY - radius;
+        double xMovement = mouseLocation.getX() - windowPositionX - possitionX - radius;
+        double yMovement = mouseLocation.getY() - windowPositionY - possitionY - radius;
 
+        
         calculateAngleForDrawingRotatedShip(xMovement, yMovement);
 
         xMovement = xMovement / 25;
@@ -75,29 +77,31 @@ public class SpaceShip extends SpaceObjectWithColision {
 
         possitionX = possitionX + xMovement;
         possitionY = possitionY + yMovement;
+        
+       // System.out.println(possitionX);
 
         controlWindowBounds();
         preparePolygonForColisionDetection();
     }
 
     private void controlWindowBounds() {
-        if (possitionX < 0) {
-            possitionX = 0;
+        if (possitionX < 0.0) {
+            possitionX = 0.0;
         }
-        if (possitionX > 580) {
-            possitionX = 580;
+        if (possitionX > 580.0) {
+            possitionX = 580.0;
         }
-        if (possitionY < 0) {
+        if (possitionY < 0.0) {
             possitionY = 0;
         }
-        if (possitionY > 800) {
-            possitionY = 800;
+        if (possitionY > 800.0) {
+            possitionY = 800.0;
         }
     }
 
-    public static void setUpGlobalWindowCoords(Double globalX, Double globalY) {
-        windowPositionX = (int) Math.round(globalX);
-        windowPositionY = (int) Math.round(globalY);
+    public static void setUpGlobalWindowCoords(double globalX, double globalY) {
+        windowPositionX = globalX;
+        windowPositionY = globalY;
     }
 
     private void preparePolygonForColisionDetection() {

@@ -17,7 +17,7 @@ import javafx.scene.shape.Shape;
  */
 public abstract class SpaceObjectWithColision extends SpaceObject {
 
-    public SpaceObjectWithColision(int possitionX, int possitionY, int radius, int velocity) {
+    public SpaceObjectWithColision(double possitionX, double possitionY, int radius, int velocity) {
         super(possitionX, possitionY, radius, velocity);
     }
 
