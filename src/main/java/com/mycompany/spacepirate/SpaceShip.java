@@ -34,6 +34,8 @@ public class SpaceShip extends SpaceObjectWithColision {
 
     @Override
     public void draw(GraphicsContext gc) {
+        gc.clearRect(0, 0, MainApp.WINDOWWIDTH, MainApp.WINDOWHEIGH);
+        
         gc.save();
         gc.translate(possitionX, possitionY);
         gc.rotate(angle);
@@ -85,17 +87,17 @@ public class SpaceShip extends SpaceObjectWithColision {
     }
 
     private void controlWindowBounds() {
-        if (possitionX < 0.0) {
-            possitionX = 0.0;
+        if (possitionX < shipImage.getWidth()/2) {
+            possitionX = shipImage.getWidth()/2;
         }
-        if (possitionX > 580.0) {
-            possitionX = 580.0;
+        if (possitionX > MainApp.WINDOWWIDTH - shipImage.getWidth()/2) {
+            possitionX = MainApp.WINDOWWIDTH - shipImage.getWidth()/2;
         }
-        if (possitionY < 0.0) {
-            possitionY = 0;
+        if (possitionY < shipImage.getHeight()/2) {
+            possitionY = shipImage.getHeight()/2;
         }
-        if (possitionY > 800.0) {
-            possitionY = 800.0;
+        if (possitionY > MainApp.WINDOWHEIGH - shipImage.getWidth()/2) {
+            possitionY = MainApp.WINDOWHEIGH - shipImage.getWidth()/2;
         }
     }
 
@@ -142,6 +144,11 @@ public class SpaceShip extends SpaceObjectWithColision {
 
     public Polygon getPolygon() {
         return polygon;
+    }
+
+    @Override
+    public boolean colisionDetection(Polygon spaceShipPolygon) {
+        return false;
     }
 
 }

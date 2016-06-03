@@ -21,13 +21,6 @@ public abstract class SpaceObjectWithColision extends SpaceObject {
         super(possitionX, possitionY, radius, velocity);
     }
 
-    public boolean colisionDetection(Polygon spaceShipPolygon) { // collision detection should be based on the polygons created just for detection purposes
-        Circle meteorPolygon = new Circle(possitionX+ radius / 2, possitionY + radius / 2, (radius / 2) - 3); // -5 is here because the meteorits have not totally round shape and we dont want the player to be "hit" when he is not supposed to
-        Shape intersect = Shape.intersect(spaceShipPolygon, meteorPolygon);
-        if (intersect.getLayoutBounds().getHeight() <= 0 || intersect.getLayoutBounds().getWidth() <= 0) {
-            return false;
-        }
-        return true;
-    }
+    public abstract boolean colisionDetection(Polygon spaceShipPolygon);
 
 }

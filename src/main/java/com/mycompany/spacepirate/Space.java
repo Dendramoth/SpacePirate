@@ -24,7 +24,7 @@ public class Space {
     private int timeToGenerateMeteorit = 50;
     private List<Meteor> listOfAllMeteorits = new ArrayList<Meteor>();
     Random random = new Random();
-    private SpaceShip spaceShip = new SpaceShip(310.0, 800.0, 20, 5);
+    
 
     public Space() {
     }
@@ -36,16 +36,6 @@ public class Space {
         for (Meteor meteor : listOfAllMeteorits) {
             meteor.draw(graphicsContextSpace);
         }
-    }
-
-    public void moveSpaceShipInSpace() {
-        spaceShip.moveToMouseCursor();
-    }
-
-    public void drawSpaceShipInSpace(GraphicsContext graphicsContextShip) {
-        graphicsContextShip.clearRect(0, 0, MainApp.WINDOWWIDTH, MainApp.WINDOWHEIGH);
-        spaceShip.draw(graphicsContextShip);
-       //gh spaceShip.drawPolygon(graphicsContextShip);
     }
 
     public void moveAllMeteorits() {
@@ -80,17 +70,8 @@ public class Space {
         }
     }
 
-    public boolean controlCollisions() {
-        for (Meteor meteor : listOfAllMeteorits) {
-            if (meteor.colisionDetection(spaceShip.getPolygon())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public SpaceShip getSpaceShip() {
-        return spaceShip;
+    public List<Meteor> getListOfAllMeteorits() {
+        return listOfAllMeteorits;
     }
 
 }

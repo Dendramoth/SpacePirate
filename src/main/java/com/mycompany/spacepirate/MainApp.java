@@ -21,6 +21,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
@@ -29,8 +30,9 @@ public class MainApp extends Application {
     public static int WINDOWWIDTH = 640;
     public static int WINDOWHEIGH = 860;
 
-    Space universe;
-    LoadAllImages loadAllImages = new LoadAllImages();
+    private Space universe;
+    private SpaceShip spaceShip; 
+    public LoadAllImages loadAllImages = new LoadAllImages();
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -42,11 +44,15 @@ public class MainApp extends Application {
 
         Canvas shipCanvas = new Canvas(WINDOWWIDTH, WINDOWHEIGH);
         GraphicsContext gcShip = shipCanvas.getGraphicsContext2D();
+        
+        universe = new Space();
+        spaceShip = new SpaceShip(310.0, 700.0, 20, 5);
         //      gcShip.setFill(Color.GREEN);
         //      gcShip.fillOval(50, 50, 20, 20);
-        universe = new Space();
+        
+        
 
-        stage.addEventHandler(KeyEvent.KEY_PRESSED,
+        /*   stage.addEventHandler(KeyEvent.KEY_PRESSED,
                 new EventHandler<KeyEvent>() {
             public void handle(
                     final KeyEvent keyEvent) {
@@ -57,6 +63,13 @@ public class MainApp extends Application {
                     universe.getSpaceShip().moveToTheRight();
                 }
             }
+        });*/
+        
+        stage.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                System.out.println("mouse click detected! ");
+            }
         });
 
         root.getChildren().add(spaceCanvas);
@@ -64,7 +77,7 @@ public class MainApp extends Application {
         shipCanvas.toFront();
         stage.setScene(new Scene(root));
         stage.show();
-        
+
         gameInfiniteLoop(gcSpace, gcShip, universe, stage);
     }
 
@@ -85,10 +98,10 @@ public class MainApp extends Application {
         universe.drawSpaceAndAllMeteoritsInSpace(graphicalContextSpace);
         universe.moveAllMeteorits();
         universe.generateMeteorit();
-        universe.moveSpaceShipInSpace();
-        universe.drawSpaceShipInSpace(graphicalContextShip);
+        spaceShip.moveToMouseCursor();
+        spaceShip.draw(graphicalContextShip);
 
-        if (!universe.controlCollisions()) {
+        if (!controlCollisions()) {
 
             final Timeline timeline = new Timeline(new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
                 @Override
@@ -97,8 +110,17 @@ public class MainApp extends Application {
                 }
             }));
             timeline.play();
-            
+
         }
+    }
+    
+    public boolean controlCollisions() {
+        for (Meteor meteor : universe.getListOfAllMeteorits()) {
+            if (meteor.colisionDetection(spaceShip.getPolygon())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
