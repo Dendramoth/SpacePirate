@@ -23,10 +23,9 @@ public abstract class SpaceObject {
         this.radius = radius;
         this.velocity = velocity;
     }
-            
-    public void moveObject () {
-        possitionY = possitionY + velocity; 
-    }
+      
+    
+    public abstract void moveObject ();
     
     public abstract void draw (GraphicsContext gc) ;
 

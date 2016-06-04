@@ -42,6 +42,11 @@ public class Meteor extends SpaceObjectWithColision {
         }
         return true;
     }
+
+    @Override
+    public void moveObject() {
+        possitionY = possitionY + velocity;
+    }
     
     
 }

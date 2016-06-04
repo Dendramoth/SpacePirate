@@ -29,10 +29,6 @@ public class Rocket extends SpaceObjectWithColision{
         gc.fillOval(possitionX, possitionY, radius, radius);
     }
     
-    public void moveRocket() {
-        possitionY = possitionY + velocity;
-    }
-
     @Override
     public boolean colisionDetection(Polygon spaceShipPolygon) {
         Circle meteorPolygon = new Circle(possitionX+ radius / 2, possitionY + radius / 2, (radius / 2)); 
@@ -41,6 +37,11 @@ public class Rocket extends SpaceObjectWithColision{
             return false;
         }
         return true;
+    }
+
+    @Override
+    public void moveObject() {
+        possitionY = possitionY + velocity;
     }
     
     
